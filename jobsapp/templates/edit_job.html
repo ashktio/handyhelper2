@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Edit Job</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+</head>
+
+<body>
+
+    <div class="messages">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="container">
+
+        <div class="header">
+            <h2>Hello {{this_user.first_name}}! Let's edit your job!</h2>
+            <div>
+                <a class="btn" href="/logout">Log Out</a>
+            </div>
+        </div><br />
+        <hr>
+
+
+        <div>
+            <form action="/{{job_to_edit.id}}/update" method="POST">
+                {% csrf_token %}
+
+                <div class="form-group row">
+
+                    <label class="col-2 col-form-label" for="title">Title:</label>
+                    <div class="col-10">
+                        <input class="form-contol-plaintext" value="{{job_to_edit.title}}" type="text" name="ttl">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" for="dsc">Description:</label>
+                    <div class="col-10">
+                        <input class="form-contol-plaintext" value="{{job_to_edit.dsc}}" type="text" name="dsc">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" for="lctn">Location:</label>
+                    <div class="col-10">
+                        <input class="form-contol-plaintext" value="{{job_to_edit.lctn}}" type="text" name="lctn">
+                    </div>
+                </div>
+
+                <input class="btn-primary" type="submit" value="Submit">
+            </form><br />
+            <form action="/dashboard" method="POST">
+                {% csrf_token %}
+                <input class="btn-secondary" type="submit" value="Cancel">
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary{
+    border: black solid 3px;
+    padding-left: 50px;
+}
+
+.mybutton{
+    text-decoration: none;
+    border: none;
+    color: #007bff;
+}

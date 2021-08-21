@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Handy Helper Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+</head>
+
+<body>
+    <div class="messages">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="container">
+
+
+        <div class="header">
+            <h2>Hello {{this_user.first_name}}!</h2>
+            <div>
+                <a href="/logout">Log Out</a> | <a href="/jobs/new">New job!</a>
+            </div>
+        </div><br />
+        <hr>
+
+
+        <table class="table table-striped">
+            <h3>Everyone's Job</h3>
+            <thead>
+                <tr>
+                    <th scope="col">Job</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in all_jobs %}
+                <tr>
+                    {% if job not in this_user.favorite_jobs.all %}
+                    <th scope="row">{{job.title}}</th>
+                    <td>{{job.lctn}}</td>
+                    <td>
+                        <a href="/{{job.id}}/details">View</a> | <a href="/{{job.id}}/{{this_user.id}}/favorites">Add</a>
+                        {% if job in this_user.jobs.all %}
+                        <a href="/{{job.id}}/edit">Edit</a> |
+                        <form action="/{{job.id}}/delete" method="POST">
+                            {% csrf_token %}
+                            <input class="mybutton" type="submit" value="Remove"></p>
+                            {% endif %}
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table table-striped">
+            <h3>{{this_user.first_name}}'s Job</h3>
+            <thead>
+                <tr>
+                    <th scope="col">Job</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fave in fave_jobs %}
+                <tr>
+                    <th scope="row">{{fave.title}}</th>
+                    <td>
+                        <a href="/{{fave.id}}/details">View</a> |
+                        <a href="/{{fave.id}}/unfavorite">Give up</a> |     
+                        <form action="/{{fave.id}}/delete" method="POST">
+                            {% csrf_token %}
+                            <input class="mybutton" type="submit" value="Done"></p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

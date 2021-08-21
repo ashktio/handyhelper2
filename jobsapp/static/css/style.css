@@ -1,0 +1,27 @@
+.container {
+    width: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 100px;
+}
+
+.form-group {
+    width: 500px; 
+}
+
+button {
+    margin-top: 20px;
+}
+
+.btn{
+    align-items: flex-end;
+}
+
+.messages{
+    width: 100%;
+}
+
+h1{
+    text-align: center;
+    margin-top: 100px;
+}

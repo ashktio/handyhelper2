@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Handy Helper Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+</head>
+
+<body>
+    <div class="messages">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="container">
+
+
+        <div class="header">
+            <h2>Hello {{user.first_name}}! These are the job details!</h2>
+            <div>
+                <a href="/dashboard">Dashboard</a> | <a href="/logout">Log Out</a>
+            </div>
+        </div><br />
+        <hr>
+
+
+        <h3>{{this_job.title}}</h3>
+        <div class="summary">
+            <div class="row">
+                <p>{{this_job.dsc}}</p>
+            </div>
+            <div class="row">
+                <p>Location: {{this_job.lctn}}</p>
+            </div>
+            <div class="row">
+                <p>Posted by: {{this_job.posted_by.first_name}} {{this_job.posted_by.last_name}}</p>
+            </div>
+            <div class="row">
+                <p>Posted on: {{this_job.created_at}}</p>
+            </div>
+            {% if this_job not in user.favorite_jobs.all %}
+            <a href="/{{this_job.id}}/{{user.id}}/favorites">Add to my jobs</a>
+            {% endif %}
+        </div>
+        
+    </div>
+
+</body>
+
+</html>
